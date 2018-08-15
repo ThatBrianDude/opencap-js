@@ -14,12 +14,12 @@ const opencap = require("opencap")
 
 #### Fetch all addresses for a given alias
 ```javascript
-const addresses = opencap.getAddresses("example@domain.tld")
+const addresses = await opencap.getAddresses("example@domain.tld")
 ```
 
 #### Fetch specific address for a given alias
 ```javascript
-const address = opencap.getAddress("example@domain.tld", 100 /* Bitcoin */)
+const address = await opencap.getAddress("example@domain.tld", 100 /* Bitcoin */)
 ```
 
 #### Add/Update an address
