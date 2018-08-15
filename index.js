@@ -1,5 +1,5 @@
 const validation = require("./validation")
-const parse = require("./parsing.js")
+const parse = require("./parsing")
 const request = require("request-promise-native")
 
 /**
@@ -134,7 +134,7 @@ async function getAddresses(alias) {
 }
 
 /**
- * Fetches all addresses behind the given alias
+ * Fetches a specific address behind the given alias
  * @param {string} alias The alias the addresses belong to
  * @param {number} type The address type to be fetched
  * 
