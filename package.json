@@ -1,7 +1,7 @@
 {
   "name": "opencap",
   "version": "1.0.2",
-  "description": "OpenCap wrapper for interacting with an opencap server.",
+  "description": "A javascript library for interacting with an OpenCap server.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,5 +11,12 @@
   "dependencies": {
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5"
-  }
+  },
+  "keywords": [
+    "crypto",
+    "alias",
+    "bitcoin",
+    "opencap",
+    "openalias"
+  ]
 }
