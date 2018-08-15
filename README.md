@@ -26,20 +26,20 @@ const address = opencap.getAddress("example@domain.tld", 100 /* Bitcoin */)
 ```javascript
 const authenticationResult = await opencap.authenticate("example@domain.tld", "examplepassword")
     
-await opencap.putAddress("brian_1234@ogdolo.com", 100, "example_address", authenticationResult.jwt)        
+await opencap.putAddress("example@domain.tld", 100, "example_address", authenticationResult.jwt)        
 ```
 
 #### Remove an address
 ```javascript
 const authenticationResult = await opencap.authenticate("example@domain.tld", "examplepassword")
     
-await opencap.deleteAddress("brian_1234@ogdolo.com", 100, authenticationResult.jwt)        
+await opencap.deleteAddress("example@domain.tld", 100, authenticationResult.jwt)        
 ```
 
 #### Remove all addresses
 ```javascript
 const authenticationResult = await opencap.authenticate("example@domain.tld", "examplepassword")
     
-await opencap.deleteAllAddress("brian_1234@ogdolo.com", authenticationResult.jwt)        
+await opencap.deleteAllAddress("example@domain.tld", authenticationResult.jwt)        
 ```
 
