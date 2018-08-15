@@ -1,6 +1,6 @@
 {
   "name": "opencap",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "OpenCap wrapper for interacting with an opencap server.",
   "main": "index.js",
   "scripts": {
