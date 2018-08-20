@@ -12,6 +12,11 @@
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5"
   },
+  "homepage": "https://github.com/ThatBrianDude/opencap-js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ThatBrianDude/opencap-js"
+  },
   "keywords": [
     "crypto",
     "alias",
