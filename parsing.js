@@ -4,7 +4,7 @@
  * @param {string} alias 
  */
 function hostFromAlias(alias) {
-    return alias.replace(/.*@/, "")
+    return alias.replace(/.*\$/, "")
 }
 
 module.exports = {

@@ -9,7 +9,7 @@ const request = require("request-promise-native")
  */
 async function authenticate(alias, password) {
     if (!validation.isValidAlias(alias))
-        throw new Error("Invalid Alias. (example@domain.tld)")
+        throw new Error("Invalid Alias. (example$domain.tld)")
 
     const host = parse.hostFromAlias(alias)
     const url = `https://opencap.${host}/v1/auth`
@@ -40,7 +40,7 @@ async function authenticate(alias, password) {
  */
 async function putAddress(alias, type, address, jwt) {
     if (!validation.isValidAlias(alias))
-        throw new Error("Invalid Alias. (example@domain.tld)")
+        throw new Error("Invalid Alias. (example$domain.tld)")
 
     const host = parse.hostFromAlias(alias)
     const url = `https://opencap.${host}/v1/addresses`
@@ -70,7 +70,7 @@ async function putAddress(alias, type, address, jwt) {
  */
 async function deleteAddress(alias, type, jwt) {
     if (!validation.isValidAlias(alias))
-        throw new Error("Invalid Alias. (example@domain.tld)")
+        throw new Error("Invalid Alias. (example$domain.tld)")
 
     const host = parse.hostFromAlias(alias)
     const url = `https://opencap.${host}/v1/addresses/${type}`
@@ -95,7 +95,7 @@ async function deleteAddress(alias, type, jwt) {
  */
 async function deleteAllAddresses(alias, jwt) {
     if (!validation.isValidAlias(alias))
-        throw new Error("Invalid Alias. (example@domain.tld)")
+        throw new Error("Invalid Alias. (example$domain.tld)")
 
     const host = parse.hostFromAlias(alias)
     const url = `https://opencap.${host}/v1/addresses`
@@ -119,7 +119,7 @@ async function deleteAllAddresses(alias, jwt) {
  */
 async function getAddresses(alias) {
     if (!validation.isValidAlias(alias))
-        throw new Error("Invalid Alias. (example@domain.tld)")
+        throw new Error("Invalid Alias. (example$domain.tld)")
 
     const host = parse.hostFromAlias(alias)
     const url = `https://opencap.${host}/v1/addresses`
@@ -142,7 +142,7 @@ async function getAddresses(alias) {
  */
 async function getAddress(alias, type) {
     if (!validation.isValidAlias(alias))
-        throw new Error("Invalid Alias. (example@domain.tld)")
+        throw new Error("Invalid Alias. (example$domain.tld)")
 
     const host = parse.hostFromAlias(alias)
     const url = `https://opencap.${host}/v1/addresses?alias=${alias}&address_type=${type}`
