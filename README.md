@@ -1,5 +1,5 @@
 # opencap-js
-A javascript library for interacting with an OpenCap server.
+A javascript library for interacting with an OpenCAP server.
 
 ## Installation
 
@@ -14,32 +14,32 @@ const opencap = require("opencap")
 
 #### Fetch all addresses for a given alias
 ```javascript
-const addresses = await opencap.getAddresses("example@domain.tld")
+const addresses = await opencap.getAddresses("example$domain.tld")
 ```
 
 #### Fetch specific address for a given alias
 ```javascript
-const address = await opencap.getAddress("example@domain.tld", 100 /* Bitcoin */)
+const address = await opencap.getAddress("example$domain.tld", 100 /* Bitcoin */)
 ```
 
 #### Add/Update an address
 ```javascript
-const authenticationResult = await opencap.authenticate("example@domain.tld", "examplepassword")
+const authenticationResult = await opencap.authenticate("example$domain.tld", "examplepassword")
     
-await opencap.putAddress("example@domain.tld", 100, "example_address", authenticationResult.jwt)        
+await opencap.putAddress("example$domain.tld", 100, "example_address", authenticationResult.jwt)        
 ```
 
 #### Remove an address
 ```javascript
-const authenticationResult = await opencap.authenticate("example@domain.tld", "examplepassword")
+const authenticationResult = await opencap.authenticate("example$domain.tld", "examplepassword")
     
-await opencap.deleteAddress("example@domain.tld", 100, authenticationResult.jwt)        
+await opencap.deleteAddress("example$domain.tld", 100, authenticationResult.jwt)        
 ```
 
 #### Remove all addresses
 ```javascript
-const authenticationResult = await opencap.authenticate("example@domain.tld", "examplepassword")
+const authenticationResult = await opencap.authenticate("example$domain.tld", "examplepassword")
     
-await opencap.deleteAllAddress("example@domain.tld", authenticationResult.jwt)        
+await opencap.deleteAllAddress("example$domain.tld", authenticationResult.jwt)        
 ```
 
