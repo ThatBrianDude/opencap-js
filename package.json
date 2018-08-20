@@ -1,7 +1,7 @@
 {
   "name": "opencap",
   "version": "1.0.4",
-  "description": "A javascript library for interacting with an OpenCap server.",
+  "description": "A javascript library for interacting with an OpenCAP server.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
