@@ -4,9 +4,9 @@ A javascript library for interacting with an OpenCAP server.
 This package uses DNS lookups and will not work in browsers. 
 In case you need OpenCAP in your browser app you have two options:
 
-1. Use a DNS service that provides SRV lookups through an API
+1. Use a DNS service that provides SRV lookups through an API ([Google DNS HTTPS API](https://dns.google.com/), [Cloudflare DNS HTTPS API](https://developers.cloudflare.com/1.1.1.1/dns-over-https/json-format/))
 
-2. Use this package in your backend and provide the functionality through api endpoints.
+2. Use this package in your backend and provide the functionality through your own api endpoints.
 
 ## Known Issues: 
 'UNABLE_TO_VERIFY_LEAF_SIGNATURE'
