@@ -1,6 +1,25 @@
 # opencap-js
 A javascript library for interacting with an OpenCAP server.
 
+## Known Issues: 
+'UNABLE_TO_VERIFY_LEAF_SIGNATURE'
+
+NodeJS by default blocks requests to servers signed by intermediary Certification Authorities, even trusted, commonly known ones.
+This means that any alias hosted at a server with said certificate will not be resolved properly. To fix this there is a package that will inject intermediary certificates. Chrome for an example trusts these certificates by default. 
+
+Install the following package: 'ssl-root-cas'
+
+Then do as follows: 
+```javascript
+const sslRootCAs = require('ssl-root-cas/latest')
+
+sslRootCAs.inject()
+```
+
+Once the certificates were downloaded and installed once, you may remove those lines from your application.
+
+Your client can now perfectly resolve any OpenCAP alias.
+
 ## Installation
 
     npm i --save opencap
