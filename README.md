@@ -1,5 +1,8 @@
 # opencap-js
 A javascript library for interacting with an OpenCAP server.
+### Caution:
+This package uses DNS lookups and will not work in browsers. 
+In case you need OpenCAP in your browser app, use this package in your backend and provide the functionality through api endpoints.
 
 ## Known Issues: 
 'UNABLE_TO_VERIFY_LEAF_SIGNATURE'
