@@ -1,6 +1,8 @@
+const request = require("request-promise-native")
+const messages = require("./messages.json")
 const validation = require("./validation")
 const parse = require("./parsing")
-const request = require("request-promise-native")
+const dns = require("dns")
 
 /**
  * Requests and returns JWT from the server at the host provided in the alias. 
@@ -9,10 +11,9 @@ const request = require("request-promise-native")
  */
 async function authenticate(alias, password) {
     if (!validation.isValidAlias(alias))
-        throw new Error("Invalid Alias. (example$domain.tld)")
+        throw new Error(messages.INVALID_ALIAS_FORMAT)
 
-    const host = parse.hostFromAlias(alias)
-    const url = `https://opencap.${host}/v1/auth`
+    const url = await getTargetUrl(alias, `/v1/auth`)
 
     const result = await request({
         method: 'post',
@@ -40,12 +41,11 @@ async function authenticate(alias, password) {
  */
 async function putAddress(alias, type, address, jwt) {
     if (!validation.isValidAlias(alias))
-        throw new Error("Invalid Alias. (example$domain.tld)")
+        throw new Error(messages.INVALID_ALIAS_FORMAT)
 
-    const host = parse.hostFromAlias(alias)
-    const url = `https://opencap.${host}/v1/addresses`
+    const url = await getTargetUrl(alias, `/v1/addresses`)
 
-    const result = await request({
+    return await request({
         method: 'put',
         headers: {
             Authorization: `Bearer ${jwt}`
@@ -57,8 +57,6 @@ async function putAddress(alias, type, address, jwt) {
         json: true,
         url: url
     })
-
-    return result
 }
 
 /**
@@ -70,12 +68,11 @@ async function putAddress(alias, type, address, jwt) {
  */
 async function deleteAddress(alias, type, jwt) {
     if (!validation.isValidAlias(alias))
-        throw new Error("Invalid Alias. (example$domain.tld)")
+        throw new Error(messages.INVALID_ALIAS_FORMAT)
 
-    const host = parse.hostFromAlias(alias)
-    const url = `https://opencap.${host}/v1/addresses/${type}`
+    const url = await getTargetUrl(alias, `/v1/addresses/${type}`)
 
-    const result = await request({
+    return await request({
         method: 'delete',
         headers: {
             Authorization: `Bearer ${jwt}`
@@ -83,8 +80,6 @@ async function deleteAddress(alias, type, jwt) {
         json: true,
         url: url
     })
-
-    return result
 }
 
 /**
@@ -95,12 +90,11 @@ async function deleteAddress(alias, type, jwt) {
  */
 async function deleteAllAddresses(alias, jwt) {
     if (!validation.isValidAlias(alias))
-        throw new Error("Invalid Alias. (example$domain.tld)")
+        throw new Error(messages.INVALID_ALIAS_FORMAT)
 
-    const host = parse.hostFromAlias(alias)
-    const url = `https://opencap.${host}/v1/addresses`
+    const url = await getTargetUrl(alias, "/v1/addresses")
 
-    const result = await request({
+    return await request({
         method: 'delete',
         headers: {
             Authorization: `Bearer ${jwt}`
@@ -108,29 +102,6 @@ async function deleteAllAddresses(alias, jwt) {
         json: true,
         url: url
     })
-
-    return result
-}
-
-/**
- * Fetches all addresses behind the given alias
- * @param {string} alias The alias the addresses belong to
- *  
- */
-async function getAddresses(alias) {
-    if (!validation.isValidAlias(alias))
-        throw new Error("Invalid Alias. (example$domain.tld)")
-
-    const host = parse.hostFromAlias(alias)
-    const url = `https://opencap.${host}/v1/addresses`
-
-    const result = await request({
-        method: 'get',
-        json: true,
-        url: url
-    })
-
-    return result
 }
 
 /**
@@ -142,18 +113,71 @@ async function getAddresses(alias) {
  */
 async function getAddress(alias, type) {
     if (!validation.isValidAlias(alias))
-        throw new Error("Invalid Alias. (example$domain.tld)")
+        throw new Error(messages.INVALID_ALIAS_FORMAT)
 
-    const host = parse.hostFromAlias(alias)
-    const url = `https://opencap.${host}/v1/addresses?alias=${alias}&address_type=${type}`
+    const url = await getTargetUrl(alias, `/v1/addresses?alias=${alias}&address_type=${type}`)
 
-    const result = await request({
+    return await request({
         method: 'get',
         json: true,
         url: url
     })
+}
 
-    return result
+/**
+ * Fetches all addresses behind the given alias.
+ * @param {string} alias 
+ *  
+ */
+async function getAddresses(alias) {
+    if (!validation.isValidAlias(alias))
+        throw new Error(messages.INVALID_ALIAS_FORMAT)
+
+    const url = await getTargetUrl(alias, `/v1/addresses?alias=${alias}`)
+
+    return await request({
+        method: 'get',
+        json: true,
+        url: url
+    })
+}
+
+/**
+ * Resolves target host of the given alias and appends the given path. 
+ * @param {string} alias 
+ * @param {string} path 
+ */
+async function getTargetUrl(alias, path) {
+    const target = await getTargetHost(alias)
+    return `https://${target}${path}`
+}
+
+/**
+ * Fetches the actual host behind an alias considering proxy domains via SRV Lookups.
+ * @param {string} alias 
+ */
+async function getTargetHost(alias) {
+    const host = parse.hostFromAlias(alias)
+    const srvResult = await fetchOpenCAPSRVRecord(host)
+    const targetHost = srvResult[0].name
+    const targetPort = srvResult[0].port
+    return `${targetHost}:${targetPort}`
+}
+
+/**
+ * Fetches the opencap specific SRV record at the given domain. 
+ * @param {string} domain 
+ */
+function fetchOpenCAPSRVRecord(domain) {
+    const url = `_opencap._tcp.${domain}`
+    return new Promise((resolve, reject) => {
+        dns.resolveSrv(url, (error, result) => {
+            if (error) {
+                return reject(error)
+            }
+            resolve(result)
+        })
+    })
 }
 
 module.exports = {

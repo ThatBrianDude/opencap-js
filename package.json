@@ -23,5 +23,8 @@
     "bitcoin",
     "opencap",
     "openalias"
-  ]
+  ],
+  "devDependencies": {
+    "ssl-root-cas": "^1.2.5"
+  }
 }
